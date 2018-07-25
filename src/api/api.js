@@ -11,7 +11,7 @@ const instance = axios.create({
   transformRequest: [function (data) {
     return qs.stringify({
       ...data,
-      token:'3c0960e4d42cd5f48506f885e56a3f08'
+      token:'0e71691b48484bc55d2c483894914c58'
     })
   }]
 })
@@ -33,19 +33,19 @@ instance.interceptors.response.use(
 
 //   --  用户模块  --
 // 发送登陆邮件验证码
-export const sendLoginEmail = params => {
+export const UendLoginEmail = params => {
   return instance.post('/user/sendLoginEmail', params)
 }
 // 用户登陆
-export const userLogin = params => {
+export const UserLogin = params => {
   return instance.post('/user/login', params)
 }
 // logout登出
-export const userLogout = params => {
+export const UserLogout = params => {
   return instance.post('/user/logout', params)
 }
 // 修改密码
-export const changePwd = params => {
+export const ChangePwd = params => {
   return instance.post('/user/changePassword', params)
 }
 // 获取当前机构API列表 / 指定API
@@ -85,7 +85,7 @@ export const getAllExchange = params => {
 
 // 资产统计
 export const AssetsStatistics = params => {
-  return instance.post('/assets/assetsStatistics', params)
+  return instance.get('/assets/assetsStatistics', {params})
 }
 // 资产明细
 export const AssetsDetail = params => {
@@ -93,21 +93,21 @@ export const AssetsDetail = params => {
 }
 // 统计流水
 export const CaptialStatistics = params => {
-  return instance.post('/assets/captialStatistics', params)
+  return instance.get('/assets/captialStatistics', {params})
 }
 
 //  --  订单/成交 模块  --
 // 获取委托订单
 export const Orders = params => {
-  return instance.post('/order/orders', params)
+  return instance.get('/order/orders', {params})
 }
 // 统计订单/成交记录
 export const OrderStatistics = params => {
-  return instance.post('/order/orderStatistics', params)
+  return instance.get('/order/orderStatistics', {params})
 }
 // 获取成交记录
 export const Trades = params => {
-  return instance.post('/trade/trades', params)
+  return instance.get('/trade/trades', {params})
 }
 
 

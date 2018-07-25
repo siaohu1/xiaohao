@@ -1,32 +1,48 @@
 <template>
     <Row>
-        选择币种：
+        币种：
         <el-select v-model="coins" filterable placeholder="请选择" style="margin-right: 20px">
             <el-option
-                    v-for="item in options"
-                    :key="item.value"
+                    v-for="(item,index) in options"
+                    :key="index"
                     :label="item.label"
-                    :value="item.value">
+                    :value="item.value"
+            >
             </el-option>
         </el-select>
         选择交易所：
         <el-select v-model="exchange" filterable placeholder="请选择">
             <el-option
-                    v-for="item in option1"
-                    :key="item.value"
+                    v-for="(item,index) in option1"
+                    :key="index"
                     :label="item.label"
                     :value="item.value">
             </el-option>
         </el-select>
-        <Tabs type="card" style="margin-top: 30px">
-            <TabPane label="全部">
-                <Table border :columns="columns1" :data="data1"></Table>
+        <el-button @click="getAllAssetsDetail" style="margin-left: 20px">
+            搜索
+        </el-button>
+        <Tabs type="card" style="margin-top: 30px" v-show="haveSearch">
+            <TabPane label="充值">
+                <Table v-loading="loading" border :columns="columns1" :data="data2"></Table>
                 <Page :total="100" show-elevator style="display: flex;justify-content: center;margin-top: 10px" v-show="!hideCount"></Page>
             </TabPane>
-            <TabPane label="充值">充值</TabPane>
-            <TabPane label="提现">提现</TabPane>
-            <TabPane label="交易">交易</TabPane>
-            <TabPane label="其他">其他</TabPane>
+            <TabPane label="提现">
+                <Table border :columns="columns1" :data="data3" v-loading="loading"></Table>
+                <Page :total="100" show-elevator style="display: flex;justify-content: center;margin-top: 10px" v-show="!hideCount"></Page>
+            </TabPane>
+            <TabPane label="买">
+                <Table border :columns="columns1" :data="data4" v-loading="loading"></Table>
+                <Page :total="100" show-elevator style="display: flex;justify-content: center;margin-top: 10px" v-show="!hideCount"></Page>
+            </TabPane>
+            <TabPane label="卖">
+                <Table border :columns="columns1" :data="data5" v-loading="loading"></Table>
+                <Page :total="100" show-elevator style="display: flex;justify-content: center;margin-top: 10px" v-show="!hideCount"></Page>
+            </TabPane>
+            <TabPane label="交易手续费">
+                <Table border :columns="columns1" :data="data6" v-loading="loading"></Table>
+                <Page :total="100" show-elevator style="display: flex;justify-content: center;margin-top: 10px" v-show="!hideCount"></Page>
+            </TabPane>
         </Tabs>
 
     </Row>
@@ -39,6 +55,8 @@
     export default {
       data() {
         return {
+          loading:true,
+          haveSearch:false,
           exchange: '',
           coins: '',
           options: [],
@@ -49,6 +67,7 @@
             {
               title: '时间',
               key: 'createTime',
+              align: 'center',
               render: function (h, params) {
                 return h('div',
                   FormatData(new Date(this.row.createTime),'yyyy-MM-dd hh:mm:ss'))
@@ -58,45 +77,215 @@
 
             {
               title: '资金变动方向',
-              key: 'side'
+              key: 'side',
+              align: 'center',
             },
             {
               title: '发生额',
-              key: 'amount'
+              key: 'amount',
+              align: 'center',
             },
             {
               title: '变动后的余额',
-              key: 'balance'
+              key: 'balance',
+              align: 'center',
             },
             {
               title: '类型',
-              key: 'type'
+              key: 'type',
+              align: 'center',
             },
             {
               title: '备注',
-              key: 'remark'
+              key: 'remark',
+              align: 'center',
             }
           ],
-          data1: []
+          columns2: [
+            {
+              title: '时间',
+              key: 'createTime',
+              align: 'center',
+              render: function (h, params) {
+                return h('div',
+                  FormatData(new Date(this.row.createTime),'yyyy-MM-dd hh:mm:ss'))
+                /*这里的this.row能够获取当前行的数据*/
+              }
+            },
+
+            {
+              title: '资金变动方向',
+              key: 'side',
+              align: 'center',
+            },
+            {
+              title: '发生额',
+              key: 'amount',
+              align: 'center',
+            },
+            {
+              title: '变动后的余额',
+              key: 'balance',
+              align: 'center',
+            },
+            {
+              title: '类型',
+              key: 'type',
+              align: 'center',
+            },
+            {
+              title: '备注',
+              key: 'remark',
+              align: 'center',
+            }
+          ],
+          columns3: [
+            {
+              title: '时间',
+              key: 'createTime',
+              align: 'center',
+              render: function (h, params) {
+                return h('div',
+                  FormatData(new Date(this.row.createTime),'yyyy-MM-dd hh:mm:ss'))
+                /*这里的this.row能够获取当前行的数据*/
+              }
+            },
+
+            {
+              title: '资金变动方向',
+              key: 'side',
+              align: 'center',
+            },
+            {
+              title: '发生额',
+              key: 'amount',
+              align: 'center',
+            },
+            {
+              title: '变动后的余额',
+              key: 'balance',
+              align: 'center',
+            },
+            {
+              title: '类型',
+              key: 'type',
+              align: 'center',
+            },
+            {
+              title: '备注',
+              key: 'remark',
+              align: 'center',
+            }
+          ],
+          columns4: [
+            {
+              title: '时间',
+              key: 'createTime',
+              align: 'center',
+              render: function (h, params) {
+                return h('div',
+                  FormatData(new Date(this.row.createTime),'yyyy-MM-dd hh:mm:ss'))
+                /*这里的this.row能够获取当前行的数据*/
+              }
+            },
+
+            {
+              title: '资金变动方向',
+              key: 'side',
+              align: 'center',
+            },
+            {
+              title: '发生额',
+              key: 'amount',
+              align: 'center',
+            },
+            {
+              title: '变动后的余额',
+              key: 'balance',
+              align: 'center',
+            },
+            {
+              title: '类型',
+              key: 'type',
+              align: 'center',
+            },
+            {
+              title: '备注',
+              key: 'remark',
+              align: 'center',
+            }
+          ],
+          columns5: [
+            {
+              title: '时间',
+              key: 'createTime',
+              align: 'center',
+              render: function (h, params) {
+                return h('div',
+                  FormatData(new Date(this.row.createTime),'yyyy-MM-dd hh:mm:ss'))
+                /*这里的this.row能够获取当前行的数据*/
+              }
+            },
+
+            {
+              title: '资金变动方向',
+              key: 'side',
+              align: 'center',
+            },
+            {
+              title: '发生额',
+              key: 'amount',
+              align: 'center',
+            },
+            {
+              title: '变动后的余额',
+              key: 'balance',
+              align: 'center',
+            },
+            {
+              title: '类型',
+              key: 'type',
+              align: 'center',
+            },
+            {
+              title: '备注',
+              key: 'remark',
+              align: 'center',
+            }
+          ],
+          data1: [],
+          data2: [],
+          data3: [],
+          data4: [],
+          data5: [],
+          data6: [],
         }
       },
       mounted() {
         // this.initFormatter();
         this.getCoinsList();
         this.getAllExchangeList();
-        this.getAssetsDetail();
+        this.getAllAssetsDetail();
+        // this.getAssetsDetail();
+        // this.getAssetsDetail1();
+        // this.getAssetsDetail2();
+        // this.getAssetsDetail3();
+        // this.getAssetsDetail4();
       },
       methods: {
+        MyChange(){
+          console.log(111111111)
+        },
         //获取所有币种
         getCoinsList() {
           apiRequest.getAllCurrency({
-            token: 'add61ab01f8a36a0fb2a1eb3375a6085'
+            token: '0e71691b48484bc55d2c483894914c58'
           }).then(
             data => {
               console.log(data)
               if (data.code == 0) {
                 this.options = data.data.map((item, index) => {
-                  return {value: index, label: item}
+                  return {value: item, label: item}
                 })
               }
             })
@@ -104,7 +293,7 @@
         //获取所有交易所
         getAllExchangeList() {
           apiRequest.getAllExchange({
-            token: 'add61ab01f8a36a0fb2a1eb3375a6085'
+            token: '0e71691b48484bc55d2c483894914c58'
           }).then(
             data => {
               console.log(data)
@@ -117,12 +306,95 @@
           )
         },
         //获取详情
-        getAssetsDetail() {
+        getAllAssetsDetail(){
+          this.loading = true
+          setTimeout(()=>{
+            this.loading = false
+          },1000)
+          // if(this.coins.length==0){
+          //   this.$message({
+          //     type: 'error',
+          //     message: '请选择币种!',
+          //     center:true
+          //   });
+          //   return false
+          // }else if(!this.exchange){
+          //   this.$message({
+          //     type: 'error',
+          //     message: '请选择交易所!',
+          //     center:true
+          //   });
+          //   return false
+          // }
+          // else{
+            this.haveSearch = true
+            this.getAssetsDetail1()
+            this.getAssetsDetail2()
+            this.getAssetsDetail3()
+            this.getAssetsDetail4()
+            this.getAssetsDetail5()
+            setTimeout(()=>{
+              this.loading = false
+            },1500)
+          // }
+
+        },
+        //查询详情
+        getAssetsDetail1(currency = this.coins,exId = this.exchange) {
           apiRequest.AssetsDetail({
-            token: 'add61ab01f8a36a0fb2a1eb3375a6085'
+            token: '0e71691b48484bc55d2c483894914c58',
+            type:0,
+            currency:currency,
+            exId:exId
           }).then(
             data => {
-              this.data1 = data.data}
-            )
-        }}}
+              this.data2 = data.data}
+          )
+        },
+        getAssetsDetail2(currency = this.coins,exId = this.exchange) {
+          apiRequest.AssetsDetail({
+            token: '0e71691b48484bc55d2c483894914c58',
+            type:1,
+            currency:currency,
+            exId:exId
+          }).then(
+            data => {
+              this.data3 = data.data}
+          )
+        },
+        getAssetsDetail3(currency = this.coins,exId = this.exchange) {
+          apiRequest.AssetsDetail({
+            token: '0e71691b48484bc55d2c483894914c58',
+            type:2,
+            currency:currency,
+            exId:exId
+          }).then(
+            data => {
+              this.data4 = data.data}
+          )
+        },
+        getAssetsDetail4(currency = this.coins,exId = this.exchange) {
+          apiRequest.AssetsDetail({
+            token: '0e71691b48484bc55d2c483894914c58',
+            type:3,
+            currency:currency,
+            exId:exId
+          }).then(
+            data => {
+              this.data5 = data.data}
+          )
+        },
+        getAssetsDetail5(currency = this.coins,exId = this.exchange) {
+          apiRequest.AssetsDetail({
+            token: '0e71691b48484bc55d2c483894914c58',
+            type:4,
+            currency:currency,
+            exId:exId
+          }).then(
+            data => {
+              this.data6 = data.data}
+          )
+        }
+      }
+    }
 </script>

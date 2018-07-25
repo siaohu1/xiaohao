@@ -23,8 +23,6 @@
 
 <script>
   import * as apiRequest from '../api/api'
-  import { mapState } from 'vuex'
-  import { mapMutations } from 'vuex'
   export default {
     data() {
       var validatePass1 = (rule, value, callback) => {
@@ -65,11 +63,11 @@
         rules2: {
           pass: [
             { validator: validatePass, trigger: 'blur' },
-            { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' }
+            // { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' }
           ],
           checkPass: [
             { validator: validatePass2, trigger: 'blur' },
-            { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' }
+            // { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' }
           ],
           oldPass: [
             { validator: validatePass1, trigger: 'blur' }
@@ -78,10 +76,9 @@
       };
     },
     computed:{
-      ...mapState(['token'])
     },
     methods: {
-      ...mapMutations(['delUserData']),
+      // ...mapMutations(['delUserData']),
       open() {
         this.$message({
           type: 'info',
@@ -92,10 +89,9 @@
         console.log(this.token)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            apiRequest.changePwd({
-              token:this.token,
-              oldPwd:this.ruleForm2.oldPass,
-              newPwd:this.ruleForm2.pass,
+            apiRequest.ChangePwd({
+              oldPassword:this.ruleForm2.oldPass,
+              newPassword:this.ruleForm2.pass,
             }).then(
               data=>{
                 if(data.code ==0){

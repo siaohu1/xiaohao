@@ -1,10 +1,9 @@
 <template>
   <ol class="breadcrumb">
     <li class="breadcrumb-item" v-for="(item, index) in list">
-      <span class="active" v-if="isLast(index)">{{ showName(item) }}</span>
-      <router-link :to="item.path" v-else-if="item.path!==''">{{ showName(item) }}</router-link>
-
-      <a href="#/" v-else-if="item.path===''">{{ showName(item) }}</a>
+      <span class="active" v-if="isLast(index)">{{ $t(showName(item)) }}</span>
+      <a href="javascript:;" v-else-if="item.path!==''">{{ $t(showName(item) )}}</a>
+      <a href="javascript:;" v-else-if="item.path===''">{{ $t(showName(item) )}}</a>
     </li>
   </ol>
 </template>
@@ -21,7 +20,6 @@ export default {
   },
   methods: {
     isLast (index) {
-
       return index === this.list.length - 1
     },
     showName (item) {

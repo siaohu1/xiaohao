@@ -31,7 +31,7 @@
                         <div style="width: 45%;padding: 20px;position: relative">
                             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" label-position="top">
                                 <el-form-item label="Public Key" prop="key">
-                                    <el-input type="textarea" v-model="ruleForm.key" :rows="5"></el-input>
+                                <el-input v-model="ruleForm.key" disabled></el-input>
                                 </el-form-item>
                                 <el-form-item label="备注" prop="remark">
                                     <el-input v-model="ruleForm.remark"></el-input>
@@ -165,9 +165,7 @@ export default {
                 ip:''
               },
               rules: {
-                key: [
-                  { required: true, message: '请输入Public Key', trigger: 'blur' },
-                ],
+
               },
                 value1: 0,
                 value2: 0,

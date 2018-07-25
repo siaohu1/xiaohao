@@ -1,17 +1,14 @@
 <template>
   <div class="animated fadeIn">
 
-
  <Row >
 
-    <Col :sm="24" :md="8">
-        <h3>LinkChain后台管理系统</h3>
+    <Col :sm="24" :md="14">
+        <h3>{{$t('m.system')}}</h3>
         <!--<h5> <a href="https://github.com/herozhou/vue-framework-wz" target="_blank">github地址（喜欢就点个start呗）</a>  </h5>-->
     </Col>
         
-
         <div class="state-info">
-
               <section class="panel">
                     <div class="panel-body">
                         <div class="summary">

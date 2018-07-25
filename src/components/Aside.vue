@@ -56,7 +56,6 @@
 
 <script>
 export default {
-  name: 'aside'
 }
 </script>
 <style type="text/css">

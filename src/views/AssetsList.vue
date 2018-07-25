@@ -6,6 +6,7 @@
     </div>
 </template>
 <script>
+  import * as apiRequest from '../api/api'
   import expandRow from './table-expand.vue';
   export default {
     components: { expandRow },
@@ -167,6 +168,20 @@
             freeze:20,
           }
         ]
+      }
+    },
+    mounted(){
+      this.getAssetsList();
+    },
+    methods:{
+      getAssetsList(){
+        apiRequest.AssetsStatistics({
+          token:'0e71691b48484bc55d2c483894914c58'
+        }).then(
+          data =>{
+            console.log(data)
+          }
+        )
       }
     }
   }

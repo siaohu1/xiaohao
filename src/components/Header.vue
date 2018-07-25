@@ -99,17 +99,22 @@
               <Dropdown-item divided>
                   <router-link to="/key">
 
-                  <p class="dropdown-itemp"><Icon type="android-contact"></Icon>API Management</p>
+                  <p class="dropdown-itemp"><Icon type="android-contact"></Icon>
+                  {{$t('m.API_Management')}}
+                  </p>
                   </router-link>
 
               </Dropdown-item>
             <Dropdown-item >
                 <router-link to="/resetpassword">
-                    <p class="dropdown-itemp"><Icon type="android-settings"></Icon> Password</p>
+                    <p class="dropdown-itemp"><Icon type="android-settings"></Icon>{{$t('m.Password')}}</p>
                 </router-link>
 
               </Dropdown-item>
-                 <Dropdown-item > <a href="" @click="Logout"  ><p  class="dropdown-itemp"><Icon type="power"></Icon>Logout</p></a></Dropdown-item>
+            <Dropdown-item > <a  @click="changeLanguage"  ><p  class="dropdown-itemp"><Icon type="earth"></Icon>
+                {{$t('m.English')}}
+            </p></a></Dropdown-item>
+                 <Dropdown-item > <a href="" @click="Logout"  ><p  class="dropdown-itemp"><Icon type="power"></Icon>{{$t('m.Logout')}}</p></a></Dropdown-item>
 
         </Dropdown-menu>
     </Dropdown>
@@ -129,12 +134,37 @@
 import navbar from './Navbar'
 
 export default {
-  name: 'header',
+  name: '',
+  data(){
+    return{
+      lang:'zh-CN',
+    }
+  },
   components: {
     navbar,
     
   },
   methods: {
+    changeLanguage(){
+      this.$confirm('确定切换语言吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        console.log(this.lang)
+        if ( this.lang === 'zh-CN' ) {
+          this.lang = 'en-US';
+          this.$i18n.locale = this.lang;//关键语句
+        }else {
+          this.lang = 'zh-CN';
+          this.$i18n.locale = this.lang;//关键语句
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+        });
+      });
+    },
     Logout(e){
          e.preventDefault();
          this.$store.dispatch('LogOut').then(() => {

@@ -48,29 +48,28 @@ export const asyncRouterMap = [
   {
     path: '/',
     redirect: '/dashboard',
-    name: '首页',
+    name: 'm.Home1',
     component: Full,
     hidden:false,
     children: [
-      {path: '/dashboard',name: '首页',icon:'speedometer',component: _import('Dashboard')},
-      {path: '/asset',name: '资产',icon:'social-bitcoin-outline',
+      {path: '/dashboard',name: 'm.Home',icon:'home',component: _import('Dashboard')},
+      {path: '/asset',name: 'm.Assets',icon:'social-bitcoin',
         component: {render (c) { return c('router-view') }},
-        children: [ {path: 'assetsList',name: '资产列表',icon:'stats-bars',component: _import('AssetsList'), hidden:false, },
-          {path: 'assetdetail',name: '资产明细',icon:'arrow-graph-up-right',component: _import('AssetDetail')},
-          {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
+        children: [ {path: 'assetsList',name: 'm.AssetsList',icon:'ios-list',component: _import('AssetsList'), hidden:false, },
+          {path: 'assetdetail',name: 'm.AssetsDetail',icon:'cash',component: _import('AssetDetail')},
         ]
       },
-      {path: '/order',name: '订单',icon:'social-bitcoin-outline',
+      {path: '/order',name: 'm.Order',icon:'social-bitcoin-outline',
         component: {render (c) { return c('router-view') }},
-        children: [ {path: 'OrderEntrustment',name: '订单委托',icon:'stats-bars',component: _import('OrderEntrustment'), hidden:false, },
-          {path: 'OrderDetails',name: '成交明细',icon:'arrow-graph-up-right',component: _import('AssetDetail')},
+        children: [ {path: 'OrderEntrustment',name: 'm.OrderEntrustment',icon:'stats-bars',component: _import('OrderEntrustment'), hidden:false, },
+          {path: 'OrderDetails',name: 'm.OrderDetails',icon:'arrow-graph-up-right',component: _import('OrderDetails')},
         ]
       },
-      {path: '/count',name: '统计',icon:'pie-graph',
+      {path: '/count',name: 'm.Count',icon:'pie-graph',
         component: {render (c) { return c('router-view') }},
-        children: [ {path: 'countlist',name: '商场统计图表',icon:'stats-bars',component: _import('charts/CountList'), hidden:false, },
-          {path: 'radarchart',name: '雷达图',icon:'arrow-graph-up-right',component: _import('charts/RadarChart')},
-          {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
+        children: [ {path: 'countlist',name: 'm.CountList',icon:'stats-bars',component: _import('charts/CountList'), hidden:false, },
+          // {path: 'radarchart',name: '雷达图',icon:'arrow-graph-up-right',component: _import('charts/RadarChart')},
+          // {path: 'cakechart',name: '蛋糕销量图表',icon:'ios-analytics',component: _import('charts/CakeChart')}
         ]
       },
       {path: '/key',name: '公私钥管理',icon:'thumbsup',component: _import('Key'), hidden:true},
